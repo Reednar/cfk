@@ -1,13 +1,18 @@
 const isAdmin = (req, res, next) => {
-  if (req.user && req.user.role !== "admin") {
-    return res.status(403).json({ error: "You are not authorized" });
+  if (req.session.user && req.session.user.role === "admin") {
+    // L'utilisateur est connecté et a le rôle d'administrateur
+    next();
+  } else {
+    req.session.error = "La page n'existe pas";
+    res.redirect("/");
   }
-  next();
 };
 
 const isLogin = (req, res, next) => {
   if (!req.session.user) {
+    req.session.error = "Vous devez être connecté";
     res.redirect("/login");
+    return;
   }
   next();
 };

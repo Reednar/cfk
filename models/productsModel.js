@@ -5,7 +5,8 @@ const ProductSchema = mongoose.Schema({
         type: String
     },
     image: {
-        type: String
+        type: String,
+        default: "https://place-hold.it/150"
     },
     price: {
         type: Number,

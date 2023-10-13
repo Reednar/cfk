@@ -3,50 +3,42 @@
 
 <head>
     <meta charset="utf-8">
-
     <title>Connexion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
-
 </head>
 
 <body>
-    <header >
+    <header>
         <%- include('../views/templates/header.ejs'); %>
     </header>
 
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h1 class="text-center">Connexion</h1>
-            </div>
-
-            <div class="modal-body">
-                <form class="form col-md-12 center-block" method="POST" action="/users/login">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-lg" name="email" placeholder="Email" required>
+    <div class="container h-100 mt-5">
+        <div class="row h-100">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <div class="d-table-cell align-middle">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="text-center">Connexion</h1>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" method="POST" action="/users/login">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" name="email"
+                                        placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" name="password"
+                                        placeholder="Mot de passe" required>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-lg btn-block">Connexion</button>
+                                    <span class="pull-right"><a href="/register">Vous n'avez pas de compte ?</a></span>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control input-lg" name="password" placeholder="Mot de passe" required>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-lg btn-block">Connexion</button>
-                        <span class="pull-right"><a href="#">Inscription</a></span>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-</body>
-
-</html>

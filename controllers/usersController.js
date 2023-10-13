@@ -33,9 +33,9 @@ const createUser = async (req, res) => {
     const existingUser = await UserModel.findOne({ email }).exec();
 
     if (existingUser) {
-      errorMessage = "User already exists";
+      errorMessage = "L'utilisateur existe déjà";
     } else if (password !== confirmPassword) {
-      errorMessage = "Passwords are not the same";
+      errorMessage = "Les mots de passe ne correspondent pas";
     }
 
     if (errorMessage) {
@@ -96,8 +96,9 @@ const login = async (req, res) => {
     const existingUser = await UserModel.findOne({ email }).exec();
 
     if (!existingUser) {
-      req.session.error = "User does not exist";
-      return res.redirect("/login");
+      req.session.error = "L'utilisateur n'existe pas";
+      res.redirect("/login");
+      return;
     }
 
     // Check if password is correct
@@ -107,10 +108,12 @@ const login = async (req, res) => {
     );
 
     if (!isPasswordCorrect) {
-      req.session.error = "Wrong password";
-      return res.redirect("/login");
+      req.session.error = "Le mot de passe est incorrect";
+      res.redirect("/login");
+      return;
     }
 
+    // Store user in session
     req.session.user = existingUser;
     res.redirect("/");
     console.log("[POST] -> login -> success");

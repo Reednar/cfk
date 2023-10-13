@@ -1,11 +1,17 @@
 const express = require("express");
 const router = express.Router();
+const ProductModel = require("../models/productsModel");
 const User = require("../controllers/usersController");
 const Product = require("../controllers/productsController");
 const { isAdmin, isLogin } = require("../utils/middlewares");
 
 router.get("/", async (req, res) => {
-  res.render("index", { user: req.session.user });
+  if (req.session.error) {
+    res.locals.error = req.session.error;
+    req.session.error = null;
+  }
+  const products = await ProductModel.find();
+  res.render("index", { products: products, user: req.session.user });
 });
 
 router.get("/login", async (req, res) => {
@@ -25,6 +31,10 @@ router.get("/register", async (req, res) => {
 });
 
 router.get("/profile", isLogin, async (req, res) => {
+  if (req.session.error) {
+    res.locals.error = req.session.error;
+    req.session.error = null;
+  }
   res.render("profile", { user: req.session.user });
 });
 
@@ -42,7 +52,7 @@ router.delete("/users/:id", User.deleteUser);
 router.post("/users/login", User.login);
 
 // Routes pour les produits
-router.get("/products", Product.getAllProducts);
+router.get("/products", isAdmin, Product.getAllProducts);
 router.get("/products/:id", Product.getOneProduct);
 router.post("/products", isAdmin, Product.createProduct);
 router.put("/products/:id", isAdmin, Product.updateProduct);

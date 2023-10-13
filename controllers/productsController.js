@@ -3,7 +3,7 @@ const ProductModel = require("../models/productsModel");
 const getAllProducts = async (req, res) => {
   try {
     const products = await ProductModel.find();
-    res.status(200).json(products);
+    res.render("boardProducts", { products: products, user: req.session.user });
     console.log("[GET] -> get all products -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -14,7 +14,7 @@ const getAllProducts = async (req, res) => {
 const getOneProduct = async (req, res) => {
   try {
     const product = await ProductModel.findById(req.params.id);
-    res.status(200).json(product);
+    res.render("product", { product: product, user: req.session.user });
     console.log("[GET] -> get one product -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });
