@@ -3,45 +3,34 @@ const router = express.Router();
 const ProductModel = require("../models/productsModel");
 const User = require("../controllers/usersController");
 const Product = require("../controllers/productsController");
-const { isAdmin, isLogin } = require("../utils/middlewares");
+const { isAdmin, isLogin, setErrorLocals, setSuccessLocals } = require("../utils/middlewares");
+
+router.use(setErrorLocals);
+router.use(setSuccessLocals);
 
 router.get("/", async (req, res) => {
-  if (req.session.error) {
-    res.locals.error = req.session.error;
-    req.session.error = null;
-  }
-  const products = await ProductModel.find();
-  res.render("index", { products: products, user: req.session.user });
+  var products = await ProductModel.find();
+  products = JSON.parse(JSON.stringify(products));
+  res.render("index", { products: products, user: req.session.user, title: "Accueil" });
 });
 
 router.get("/login", async (req, res) => {
-  if (req.session.error) {
-    res.locals.error = req.session.error;
-    req.session.error = null;
-  }
-  res.render("login", { user: req.session.user });
+  res.render("login", { user: req.session.user, title: "Connexion" });
 });
 
 router.get("/register", async (req, res) => {
-  if (req.session.error) {
-    res.locals.error = req.session.error;
-    req.session.error = null;
-  }
-  res.render("register", { user: req.session.user });
+  res.render("register", { user: req.session.user, title: "Inscription" });
 });
 
 router.get("/profile", isLogin, async (req, res) => {
-  if (req.session.error) {
-    res.locals.error = req.session.error;
-    req.session.error = null;
-  }
-  res.render("profile", { user: req.session.user });
+  res.render("profile", { user: req.session.user, title: "Profil" });
 });
 
 router.get("/logout", async (req, res) => {
   req.session.destroy();
   res.redirect("/login");
 });
+
 
 // Routes pour les utilisateurs
 router.get("/users", User.getAllUsers);
@@ -57,5 +46,8 @@ router.get("/products/:id", Product.getOneProduct);
 router.post("/products", isAdmin, Product.createProduct);
 router.put("/products/:id", isAdmin, Product.updateProduct);
 router.delete("/products/:id", isAdmin, Product.deleteProduct);
+router.get("/createProduct", isAdmin, async (req, res) => {
+  res.render("createProducts", { user: req.session.user, title: "Créer un produit" });
+});
 
 module.exports = router;

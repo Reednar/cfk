@@ -17,13 +17,20 @@ const isLogin = (req, res, next) => {
   next();
 };
 
-const isConnect = (req, res, next) => {
-  // si l'utilisateur est connecté on return true
-  if (req.session.user) {
-    return true;
+const setErrorLocals = (req, res, next) => {
+  if (req.session.error) {
+    res.locals.error = req.session.error;
+    req.session.error = null;
   }
-  // sinon on return false
-  return false;
+  next();
 };
 
-module.exports = { isAdmin, isLogin, isConnect };
+const setSuccessLocals = (req, res, next) => {
+  if (req.session.success) {
+    res.locals.success = req.session.success;
+    req.session.success = null;
+  }
+  next();
+};
+
+module.exports = { isAdmin, isLogin, setErrorLocals, setSuccessLocals };

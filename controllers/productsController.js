@@ -1,8 +1,11 @@
 const ProductModel = require("../models/productsModel");
+const multer = require("multer");
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await ProductModel.find();
+    var products = await ProductModel.find();
+    products = JSON.parse(JSON.stringify(products));
+
     res.render("boardProducts", { products: products, user: req.session.user });
     console.log("[GET] -> get all products -> success")
   } catch (error) {
@@ -14,7 +17,7 @@ const getAllProducts = async (req, res) => {
 const getOneProduct = async (req, res) => {
   try {
     const product = await ProductModel.findById(req.params.id);
-    res.render("product", { product: product, user: req.session.user });
+    res.render("detailsProducts", { product: product, user: req.session.user });
     console.log("[GET] -> get one product -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -24,14 +27,46 @@ const getOneProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const product = new ProductModel(req.body);
-    const savedProduct = await product.save();
-    // redirect to the new product
-    res.redirect(`/products/${savedProduct._id}`);
-    console.log("[POST] -> create one product -> success")
+    const { name, Desc, price } = req.body;
+
+    // Configuration du middleware multer pour gérer le téléversement
+    const storage = multer.diskStorage({
+      destination: './public/upload', // Dossier de destination pour les images téléversées
+      filename: (req, file, cb) => {
+        cb(null, 'product_' + Date.now() + '_' + file.originalname);
+      },
+    });
+
+    const upload = multer({ storage }).single('img'); // 'img' doit correspondre à l'attribut "name" de votre champ de fichier dans le formulaire HTML
+
+    upload(req, res, async (err) => {
+      if (err) {
+        req.session.error = "Erreur lors du téléversement de l'image";
+        res.redirect("/createProduct");
+        return;
+      }
+
+      // Vous pouvez maintenant utiliser req.file pour accéder au fichier téléversé
+      if (req.file) {
+        const imagePath = req.file.filename; // Le nom du fichier généré par multer
+        const product = new ProductModel({ name, Desc, image: imagePath, price });
+        await product.save()
+          .then(() => {
+            req.session.success = "Produit créé avec succès"; // Optionnel : message de succès
+            res.redirect("/products");
+          })
+          .catch((error) => {
+            req.session.error = "Erreur lors de la création du produit : " + error.message;
+            res.redirect("/createProduct");
+          });
+      } else {
+        req.session.error = "Veuillez sélectionner une image valide";
+        res.redirect("/createProduct");
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
-    console.log("[POST] -> create one product -> error -> \n", error.message)
+    console.log("[POST] -> create one product -> error -> \n", error.message);
   }
 };
 

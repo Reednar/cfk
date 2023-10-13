@@ -9,8 +9,11 @@
                         <div class="col-sm-4">
                             <p class="mb-0">Nom</p>
                         </div>
-                        <div class="col-sm-8">
-                            <p class="text-muted mb-0"><%- user.name -%></p>
+                        <div class="col-sm-6" id="nameContainer">
+                            <p class="text-muted mb-0" id="name"><%- user.name -%></p>
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="" onclick="enableEdit('name')"><span class="fa fa-pencil-square-o"></span></a>
                         </div>
                     </div>
                     <hr>
@@ -18,8 +21,11 @@
                         <div class="col-sm-4">
                             <p class="mb-0">Prénom</p>
                         </div>
-                        <div class="col-sm-6">
-                            <p class="text-muted mb-0"><%- user.firstname -%></p>
+                        <div class="col-sm-6" id="firstnameContainer">
+                            <p class="text-muted mb-0" id="firstname"><%- user.firstname -%></p>
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="" onclick="enableEdit('firstname')"><span class="fa fa-pencil-square-o"></span></a>
                         </div>
                     </div>
                     <hr>
@@ -27,7 +33,7 @@
                         <div class="col-sm-4">
                             <p class="mb-0">Email</p>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <p class="text-muted mb-0"><%- user.email -%></p>
                         </div>
                     </div>
@@ -35,5 +41,82 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center mt-3"><button class="btn btn-primary">Modifier</button></div>
+    <div class="d-flex justify-content-center mt-5">
+        <a class="btn btn-danger" onclick="deleteUser('<%= user._id %>')">Supprimer son compte</a>
+    </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    function enableEdit(fieldId) {
+        var field = document.getElementById(fieldId);
+        if (!field) {
+            console.error('L\'élément avec l\'ID spécifié n\'existe pas.');
+            return;
+        }
+        var fieldContainer = document.getElementById(fieldId + 'Container');
+        if (!fieldContainer) {
+            console.error('Le conteneur de champ avec l\'ID spécifié n\'existe pas.');
+            return;
+        }
+        var text = field.innerText || '';
+
+        var textarea = document.createElement('input');
+        textarea.className = 'form-control';
+        textarea.value = text;
+
+        fieldContainer.removeChild(field);
+        fieldContainer.appendChild(textarea);
+
+        var saveButton = document.createElement('button');
+        saveButton.className = 'btn btn-primary mt-2';
+        saveButton.innerText = 'Enregistrer';
+        saveButton.onclick = function () {
+            var newValue = textarea.value;
+            var requestData = {};
+            requestData[fieldId] = newValue;
+
+            $.ajax({
+                type: 'PUT',
+                url: '/users/<%= user._id %>',
+                data: JSON.stringify(requestData),
+                contentType: 'application/json',
+                success: function (data) {
+                    var newText = document.createElement('p');
+                    newText.className = 'text-muted mb-0';
+                    newText.innerText = newValue;
+                    fieldContainer.removeChild(textarea);
+                    fieldContainer.appendChild(newText);
+
+                    // Supprime le bouton une fois la modification terminée
+                    saveButton.remove();
+
+                    // Recharge la page une fois la mise à jour terminée
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Erreur lors de la mise à jour du champ : ', error);
+                }
+            });
+        };
+
+        fieldContainer.appendChild(saveButton);
+    }
+
+    function deleteUser(userId) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/users/' + userId,
+            success: function (data) {
+                console.log('Utilisateur supprimé avec succès.');
+                location.reload();
+            },
+            error: function (error) {
+                console.error('Erreur lors de la suppression de l\'utilisateur : ', error);
+            }
+        });
+    }
+}
+</script>

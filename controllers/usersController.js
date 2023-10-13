@@ -48,6 +48,7 @@ const createUser = async (req, res) => {
 
       const user = new UserModel({ name, firstname, email, hashedPassword });
       await user.save();
+      req.session.success = "Votre compte a été créé";
       res.redirect("/login");
       console.log("[POST] -> create one user -> success");
     }
@@ -69,7 +70,9 @@ const updateUser = async (req, res) => {
       { new: true }
     );
 
-    res.redirect(`/profile`);
+    req.session.user = updatedUser;
+    req.session.success = "Profil mis à jour";
+    res.render("profile", { user: req.session.user });
     console.log("[PUT] -> update one user -> success");
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -79,9 +82,11 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
-    res.status(200).json(deletedUser);
+    await UserModel.findByIdAndDelete(req.params.id);
+    delete req.session.user;
+    req.session.success = "Votre compte a été supprimé";
     console.log("[DELETE] -> delete one user -> success");
+    res.status(200).end();
   } catch (error) {
     res.status(500).json({ error: error.message });
     console.log("[DELETE] -> delete one user -> error -> \n", error.message);
@@ -115,6 +120,7 @@ const login = async (req, res) => {
 
     // Store user in session
     req.session.user = existingUser;
+    req.session.success = "Vous êtes connecté";
     res.redirect("/");
     console.log("[POST] -> login -> success");
   } catch (error) {

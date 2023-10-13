@@ -2,33 +2,31 @@
     <link rel="stylesheet" href="css/accueil.css">
     <div class="container">
         <div class="row clearfix">
+            <% products.forEach(product => { %>
+                      
+                                <% product.name %>  
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card product_item">
+                                        <div class="body">
+                                            <div class="cp_img">
+                                                <% if(product.image==null){%>
+                                                    <img src="https://place-hold.it/150" class="img-fluid" alt>  
+                                                    <%}else{%>  
+                                                        <img src="../upload/ <%- product.image %> "  class="img-fluid" alt>  
+                                                        <%}%>  
+                                            </div>
+                                            <div class="product_details">
+                                                <h5><a href="ec-product-detail.html"><%- product.name %></a></h5>
+                                                <ul class="product_price list-unstyled">
+                                                    <li class="new_price"><%- product.price %></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                </div>  
+              <% }); %>
 
-            <% for (let i = 0; i < 5; i++) { %>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card product_item">
-                        <div class="body">
-                            <div class="cp_img">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Product"
-                                    class="img-fluid">
-                                <div class="hover">
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="zmdi zmdi-plus"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="zmdi zmdi-shopping-cart"></i></a>
-                                </div>
-                            </div>
-                            <div class="product_details">
-                                <h5><a href="ec-product-detail.html">Simple Black Clock</a></h5>
-                                <ul class="product_price list-unstyled">
-                                    <li class="old_price">$12.00</li>
-                                    <li class="new_price">$11.00</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>   
-            <% } %>
 
 
         </div>
