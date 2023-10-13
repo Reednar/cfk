@@ -27,25 +27,30 @@ const createUser = async (req, res) => {
   try {
     const { name, firstname, email, password, confirmPassword } = req.body;
 
+    let errorMessage = null; // Variable pour stocker les messages d'erreur
+
     // Check if user already exists
     const existingUser = await UserModel.findOne({ email }).exec();
 
     if (existingUser) {
-      req.session.error = "User already exists";
-      res.redirect("/register");
+      errorMessage = "User already exists";
     } else if (password !== confirmPassword) {
-      req.session.error = "Passwords are not the same";
-      res.redirect("/register");
+      errorMessage = "Passwords are not the same";
     }
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    if (errorMessage) {
+      req.session.error = errorMessage;
+      res.redirect("/register");
+    } else {
+      // Hash password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = new UserModel({ name, firstname, email, hashedPassword });
-    await user.save();
-    res.redirect("/login");
-    console.log("[POST] -> create one user -> success");
+      const user = new UserModel({ name, firstname, email, hashedPassword });
+      await user.save();
+      res.redirect("/login");
+      console.log("[POST] -> create one user -> success");
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
     console.log("[POST] -> create one user -> error -> \n", error.message);
@@ -54,12 +59,17 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
+    const { name, firstname } = req.body;
+
+    // Effectuer ici des contrôles de données si nécessaire
+
     const updatedUser = await UserModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { name, firstname },
       { new: true }
     );
-    res.status(200).json(updatedUser);
+
+    res.redirect(`/profile`);
     console.log("[PUT] -> update one user -> success");
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -101,7 +111,6 @@ const login = async (req, res) => {
       return res.redirect("/login");
     }
 
-    // Create session
     req.session.user = existingUser;
     res.redirect("/");
     console.log("[POST] -> login -> success");

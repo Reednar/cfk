@@ -26,7 +26,8 @@ const createProduct = async (req, res) => {
   try {
     const product = new ProductModel(req.body);
     const savedProduct = await product.save();
-    res.status(201).json(savedProduct);
+    // redirect to the new product
+    res.redirect(`/products/${savedProduct._id}`);
     console.log("[POST] -> create one product -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });

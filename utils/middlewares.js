@@ -12,4 +12,13 @@ const isLogin = (req, res, next) => {
   next();
 };
 
-module.exports = { isAdmin, isLogin };
+const isConnect = (req, res, next) => {
+  // si l'utilisateur est connecté on return true
+  if (req.session.user) {
+    return true;
+  }
+  // sinon on return false
+  return false;
+};
+
+module.exports = { isAdmin, isLogin, isConnect };

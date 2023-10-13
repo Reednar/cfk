@@ -5,21 +5,32 @@ const Product = require("../controllers/productsController");
 const { isAdmin, isLogin } = require("../utils/middlewares");
 
 router.get("/", async (req, res) => {
-  res.render("index");
+  res.render("index", { user: req.session.user });
 });
 
 router.get("/login", async (req, res) => {
-  res.render("login");
+  if (req.session.error) {
+    res.locals.error = req.session.error;
+    req.session.error = null;
+  }
+  res.render("login", { user: req.session.user });
 });
 
 router.get("/register", async (req, res) => {
-  const error = req.session.error;
-  req.session.error = null;
-  res.render("register", { error });
+  if (req.session.error) {
+    res.locals.error = req.session.error;
+    req.session.error = null;
+  }
+  res.render("register", { user: req.session.user });
 });
 
 router.get("/profile", isLogin, async (req, res) => {
   res.render("profile", { user: req.session.user });
+});
+
+router.get("/logout", async (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
 });
 
 // Routes pour les utilisateurs

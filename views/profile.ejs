@@ -1,0 +1,28 @@
+<%- include('../views/templates/header.ejs'); %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3"> 
+            <p>Nom</p>
+        </div>
+        <div class="col-3"> 
+            <p><%- user.name -%></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"> 
+            <p>Prénom</p>
+        </div>
+        <div class="col-3"> 
+            <p><%- user.firstname -%></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"> 
+            <p>Email</p>
+        </div>
+        <div class="col-3"> 
+            <p><%- user.email -%></p>
+        </div>
+    </div>
+</div>

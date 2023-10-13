@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const mongoose = require("mongoose");
+const { isConnect } = require("./utils/middlewares");
 
 const routes = require("./controllers/router");
 let app = express();
