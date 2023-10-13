@@ -27,13 +27,11 @@ const getOneProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, Desc, price } = req.body;
-
     // Configuration du middleware multer pour gérer le téléversement
     const storage = multer.diskStorage({
       destination: './public/upload', // Dossier de destination pour les images téléversées
       filename: (req, file, cb) => {
-        cb(null, 'product_' + Date.now() + '_' + file.originalname);
+        cb(null, 'product_'+file.originalname);
       },
     });
 
@@ -46,17 +44,25 @@ const createProduct = async (req, res) => {
         return;
       }
 
+      const { name, description, price } = req.body;
+
+      if (!name || !description || !price) {
+        req.session.error = "Veuillez remplir tous les champs";
+        res.redirect("/createProduct");
+        return;
+      }
+
       // Vous pouvez maintenant utiliser req.file pour accéder au fichier téléversé
       if (req.file) {
-        const imagePath = req.file.filename; // Le nom du fichier généré par multer
-        const product = new ProductModel({ name, Desc, image: imagePath, price });
+        const imagePath = "product_"+req.file.originalname;
+        const product = new ProductModel({ name, description, image: imagePath, price });
         await product.save()
           .then(() => {
             req.session.success = "Produit créé avec succès"; // Optionnel : message de succès
             res.redirect("/products");
           })
           .catch((error) => {
-            req.session.error = "Erreur lors de la création du produit : " + error.message;
+            req.session.error = " " + error.message;
             res.redirect("/createProduct");
           });
       } else {
@@ -72,23 +78,35 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const updatedProduct = await ProductModel.findByIdAndUpdate(
+    const { name, description, price } = req.body;
+
+    if (!name || !description || !price) {
+      req.session.error = "Veuillez remplir tous les champs";
+      res.redirect("/updateProduct/" + req.params.id);
+      return;
+    }
+
+    await ProductModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { name, description, price },
       { new: true }
     );
-    res.status(200).json(updatedProduct);
-    console.log("[PUT] -> update one product -> success")
+    req.session.success = "Produit mis à jour";
+    // Rediriger vers la route "/products" après la mise à jour réussie
+    res.redirect("/products");
+    console.log("[PUT] -> update one product -> success");
   } catch (error) {
     res.status(500).json({ error: error.message });
-    console.log("[PUT] -> update one product -> error -> \n", error.message)
+    console.log("[PUT] -> update one product -> error -> \n", error.message);
   }
 };
 
 const deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await ProductModel.findByIdAndDelete(req.params.id);
-    res.status(200).json(deletedProduct);
+    req.session.success = "Produit supprimé";
+    // Rediriger vers la route "/products" après la suppression réussie
+    res.redirect("/products");
     console.log("[DELETE] -> delete one product -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });

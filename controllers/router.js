@@ -31,6 +31,12 @@ router.get("/logout", async (req, res) => {
   res.redirect("/login");
 });
 
+router.get("/updateProduct/:id", async (req, res) => {
+  var product = await ProductModel.findById(req.params.id); 
+  product = JSON.parse(JSON.stringify(product));
+  res.render("updateProduct", { user: req.session.user, product: product});
+});
+
 
 // Routes pour les utilisateurs
 router.get("/users", User.getAllUsers);
@@ -41,11 +47,16 @@ router.delete("/users/:id", User.deleteUser);
 router.post("/users/login", User.login);
 
 // Routes pour les produits
-router.get("/products", isAdmin, Product.getAllProducts);
-router.get("/products/:id", Product.getOneProduct);
+router.get("/products", isAdmin, Product.getAllProducts, async (req, res) => {
+  res.render("boardProducts", { products: req.products, user: req.session.user, title: "Produits" });
+});
+router.get("/products/:id", Product.getOneProduct, async (req, res) => {
+  res.render("detailsProducts", { product: req.product, user: req.session.user, title: "Détails du produit" });
+});
 router.post("/products", isAdmin, Product.createProduct);
-router.put("/products/:id", isAdmin, Product.updateProduct);
-router.delete("/products/:id", isAdmin, Product.deleteProduct);
+// post pour update car on ne peut pas utiliser put avec un formulaire
+router.post("/products/:id", isAdmin, Product.updateProduct);
+router.get("/deleteProduct/:id", isAdmin, Product.deleteProduct);
 router.get("/createProduct", isAdmin, async (req, res) => {
   res.render("createProducts", { user: req.session.user, title: "Créer un produit" });
 });

@@ -1,5 +1,4 @@
 <%- include('../views/templates/header.ejs'); %>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 
 <link rel="stylesheet" href="css/boardProducts.css">
@@ -15,6 +14,7 @@
                         <tr>
                         <th><span>ID</span></th>
                         <th><span>Products</span></th>
+                        <th><span>Name</span></th>
                         <th><span>Created</span></th>
                         <th class="text-center"><span>Price</span></th>
                         <th>
@@ -29,29 +29,30 @@
                             <% products.forEach(product => { %>
                                 <tr> 
                                     <td>  <%- product._id %>  </td>  
-                                    <td> <% if(product.image==null){%>
-                                            <img src="https://place-hold.it/150" alt>  
+                                    <td> <% if(product.image=="https://place-hold.it/150"){%>
+                                            <img src="https://place-hold.it/150" alt="" />
                                             <%}else{%>  
-                                                <img src="/upload/ <%- product.image %>" alt>   
+                                                <img src="upload/<%- product.image %>" alt="" width="50" height="50" />   
                                             
                                                 <%} product.name %>  
                                     </td> 
+                                    <td>  <%- product.name %>  </td> 
                                     <td>  <%- product.date %>  </td> 
                                      <td>  <%- product.price %>  </td> 
                                      <td style='width: 20%;'>
-                                        <a href='#' class='table-link'>
+                                        <a href='products/<%- product._id%>' class='table-link'>
                                         <span class='fa-stack'>
                                         <i class='fa fa-square fa-stack-2x'></i>
                                         <i class='fa fa-search-plus fa-stack-1x fa-inverse'></i></span></a>
                             
-                                        <a href='#' class='table-link'>
-                                             <span class='fa-stack'>
-                                            <i class='fa fa-square fa-stack-2x'></i>
-                                             <i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
-                                             </span>
+                                        <a href='updateProduct/<%- product._id %>' class='table-link'>
+                                            <span class='fa-stack'>
+                                                <i class='fa fa-square fa-stack-2x'></i>
+                                                <i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
+                                            </span>
                                         </a>
                             
-                                        <a href='#' class='table-link danger'>
+                                        <a href='deleteProduct/<%- product._id %>' class='table-link danger'>
                                              <span class='fa-stack'>
                                              <i class='fa fa-square fa-stack-2x'></i>
                                              <i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>

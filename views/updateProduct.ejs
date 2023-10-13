@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Ajout produit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/register.css">
-
-</head>
-<body>
-    <header>
-        <%- include('../views/templates/header.ejs'); %>
-    </header>
+<%- include('../views/templates/header.ejs'); %>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <div class="container h-100 mt-5">
@@ -19,34 +7,30 @@
                 <div class="d-table-cell align-middle">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="text-center">Ajout produit</h3>
+                            <h3 class="text-center">Modification du produit <%- product.name -%> </h3>
                         </div>
                         <div class="card-body">
                             <div class="m-sm-4">
-                                <form method="POST" action="/products" enctype="multipart/form-data">
+                                <form method="POST" action="/products/<%- product._id%>">
                                     <div class="form-group">
                                         <label>Nom</label>
                                         <input class="form-control form-control-lg" type="text" name="name"
-                                            placeholder="Nom produit" required>
+                                            placeholder="Nom produit" value="<%- product.name -%>" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
                                         <input class="form-control form-control-lg" type="text" name="description"
-                                            placeholder="Description" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Image</label>
-                                        <input class="form-control form-control-lg" type="file" name="img"
-                                            placeholder="Votre image">
+                                            placeholder="Desc" value="<%- product.description -%>" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Prix</label>
-                                        <input class="form-control form-control-lg" type="number" name="price"
-                                            placeholder="prix" required>
+                                        <input class="form-control form-control-lg" type="text" name="price"
+                                            placeholder="prix" value="<%- product.price -%>" required>
                                     </div>
 
                                     <div class="text-center mt-3">
-                                        <button type="submit" class="btn-lg btn-primary">Ajout produit</a>
+                                        <button type="submit" class="btn-lg btn-primary">Enregistrer les
+                                            modifications</a>
                                     </div>
                                 </form>
                             </div>

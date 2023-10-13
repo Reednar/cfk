@@ -1,31 +1,32 @@
-    <%- include('../views/templates/header.ejs'); %>
+<%- include('../views/templates/header.ejs'); %>
     <link rel="stylesheet" href="css/accueil.css">
     <div class="container">
         <div class="row clearfix">
-            <% products.forEach(product => { %>
-                      
-                                <% product.name %>  
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card product_item">
-                                        <div class="body">
-                                            <div class="cp_img">
-                                                <% if(product.image==null){%>
-                                                    <img src="https://place-hold.it/150" class="img-fluid" alt>  
-                                                    <%}else{%>  
-                                                        <img src="../upload/ <%- product.image %> "  class="img-fluid" alt>  
-                                                        <%}%>  
-                                            </div>
-                                            <div class="product_details">
-                                                <h5><a href="ec-product-detail.html"><%- product.name %></a></h5>
-                                                <ul class="product_price list-unstyled">
-                                                    <li class="new_price"><%- product.price %></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                </div>  
-              <% }); %>
+            <% products.forEach(product=> { %>
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="card product_item">
+                        <div class="body">
+                            <div class="cp_img">
+                                <% if(product.image=="https://place-hold.it/150" ){%>
+                                    <img src="https://place-hold.it/150" class="img-fluid" alt="" />
+                                    <%}else{%>
+                                        <img src="upload/<%- product.image %>" class="img-fluid" alt="" width="300"
+                                            height="300" />
+                                        <%}%>
+                            </div>
+                            <div class="product_details">
+                                <h5><a href="products/<%- product._id%>"><%- product.name %></a></h5>
+                                <ul class="product_price list-unstyled">
+                                    <li class="new_price"><%- product.price %></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <% }); %>
 
 
 
