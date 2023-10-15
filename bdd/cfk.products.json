@@ -1,0 +1,143 @@
+[{
+  "_id": {
+    "$oid": "6529527aec0a975e12e35645"
+  },
+  "description": "Miam c croustillant",
+  "image": "product_krunchy.jpeg",
+  "price": 12,
+  "name": "Krunchyyyy",
+  "date": {
+    "$date": "2023-10-13T14:21:46.897Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295299ec0a975e12e35648"
+  },
+  "description": "Trop bon salé",
+  "image": "product_frite-grande.jpg",
+  "price": 5,
+  "name": "Frite",
+  "date": {
+    "$date": "2023-10-13T14:22:17.759Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "652952b9ec0a975e12e3564b"
+  },
+  "description": "Double croustillant",
+  "image": "product_double_krunchy.png",
+  "price": 15,
+  "name": "Double krunchy",
+  "date": {
+    "$date": "2023-10-13T14:22:49.097Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295356ec0a975e12e35651"
+  },
+  "description": "Miam",
+  "image": "product_KentuckyFries.jpg",
+  "price": 5,
+  "name": "KentuckyFrite",
+  "date": {
+    "$date": "2023-10-13T14:25:26.832Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6529537fec0a975e12e35656"
+  },
+  "description": "Bucket avec plein de poulet",
+  "image": "product_bucket.jpg",
+  "price": 12,
+  "name": "Bucket",
+  "date": {
+    "$date": "2023-10-13T14:26:07.047Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295423ec0a975e12e3565b"
+  },
+  "description": "Plein de poulet hmmmm",
+  "image": "product_Menu-Bucket-10T.jpg",
+  "price": 15,
+  "name": "Menu bucket 10T",
+  "date": {
+    "$date": "2023-10-13T14:28:51.321Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295449ec0a975e12e3565e"
+  },
+  "description": "Pour les mangeurs de plantes",
+  "image": "product_ColonelOriginalVeggie_Menu.jpg",
+  "price": 1,
+  "name": "ColonelOriginal Veggie Menu",
+  "date": {
+    "$date": "2023-10-13T14:29:29.848Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295462ec0a975e12e35661"
+  },
+  "description": "Bien coulant comme on aime",
+  "image": "product_CroustiFromage10.jpg",
+  "price": 8,
+  "name": "Crousti Fromage 10",
+  "date": {
+    "$date": "2023-10-13T14:29:54.620Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295477ec0a975e12e35664"
+  },
+  "description": "14",
+  "image": "product_Tower_CB_Menu-FR.jpg",
+  "price": 16,
+  "name": "Tower CB Menu",
+  "date": {
+    "$date": "2023-10-13T14:30:15.751Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65295495ec0a975e12e35667"
+  },
+  "description": "Attention c chaud patate",
+  "image": "product_Menu_32HW.jpg",
+  "price": 80,
+  "name": "Menu 32 HW",
+  "date": {
+    "$date": "2023-10-13T14:30:45.200Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "652955dcec0a975e12e35679"
+  },
+  "description": "attention les petits",
+  "image": "product_Menu-Enfant-Danonino.jpg",
+  "price": 10,
+  "name": "Menu enfant",
+  "date": {
+    "$date": "2023-10-13T14:36:12.759Z"
+  },
+  "__v": 0
+}]

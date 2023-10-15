@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "6526a2a291b11f371e8e7595"
+  },
+  "name": "polo",
+  "firstname": "polo",
+  "email": "polo@gmail.com",
+  "hashedPassword": "$2b$10$/Hc8nngTB8NqiXa4o6B8x.HZjdSrZyZEWerG7ie2UGJCO02HD0.Uu",
+  "role": "user",
+  "date": {
+    "$date": "2023-10-11T13:26:58.868Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6526a74e5ab083b160a6b992"
+  },
+  "name": "Gigo",
+  "firstname": "gigo",
+  "email": "gigo@gmail.com",
+  "hashedPassword": "$2b$10$8/UT2EU31qOBUbVXa2HKs.nZJJCZh.urvtkG6Z5bKat31kFVMRDGW",
+  "role": "user",
+  "date": {
+    "$date": "2023-10-11T13:46:54.440Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65291843ceb4fa175bdd1ac6"
+  },
+  "name": "admin",
+  "firstname": "admin",
+  "email": "admin@gmail.com",
+  "hashedPassword": "$2b$10$BWg2Yg9NHAfSIWtEkkoEEOGQ2Su7FUcM52fimKIu3WI6JtseJ6gs.",
+  "role": "admin",
+  "date": {
+    "$date": "2023-10-13T10:13:23.578Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6529382bf21364f16f9d9556"
+  },
+  "name": "Lolo",
+  "firstname": "Lolo",
+  "email": "lolo@gmail.com",
+  "hashedPassword": "$2b$10$4oKDUzCX1myOIQ6YhSsG4eWZdnH8eOLK/raDqpZ15d4uROoo9j8jm",
+  "role": "user",
+  "date": {
+    "$date": "2023-10-13T12:29:31.409Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6529440280599340cdb2472c"
+  },
+  "name": "Raphaël",
+  "firstname": "Raphaël",
+  "email": "rapha.78@live.fr",
+  "hashedPassword": "$2b$10$uOjFA3KSHl4SukxT/Gzlze.J40Dww7bfZR1pt9lGKY1fLagofu41i",
+  "role": "user",
+  "date": {
+    "$date": "2023-10-13T13:20:02.840Z"
+  },
+  "__v": 0
+}]

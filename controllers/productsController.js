@@ -6,7 +6,7 @@ const getAllProducts = async (req, res) => {
     var products = await ProductModel.find();
     products = JSON.parse(JSON.stringify(products));
 
-    res.render("boardProducts", { products: products, user: req.session.user });
+    res.render("boardProducts", { products: products, user: req.session.user, title: "Produits" });
     console.log("[GET] -> get all products -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -17,7 +17,7 @@ const getAllProducts = async (req, res) => {
 const getOneProduct = async (req, res) => {
   try {
     const product = await ProductModel.findById(req.params.id);
-    res.render("detailsProducts", { product: product, user: req.session.user });
+    res.render("detailsProducts", { product: product, user: req.session.user, title: "Détails du produit" });
     console.log("[GET] -> get one product -> success")
   } catch (error) {
     res.status(500).json({ error: error.message });

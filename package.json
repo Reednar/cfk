@@ -9,7 +9,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "Tony CHARBONNIER & Loïc LEPIE",
+  "author": "Tony CHARBONNIER & Loïc LEPIE & Raphael DE CASTRO",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
